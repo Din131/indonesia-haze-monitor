@@ -16,16 +16,18 @@ def fetch_hotspots() -> list[dict]:
     if not FIRMS_MAP_KEY:
         raise RuntimeError("FIRMS_MAP_KEY is not set")
     bbox = ",".join(str(v) for v in BBOX)
-    rows, ok = [], 0
+    rows, ok, problems = [], 0, []
     for source in FIRMS_SOURCES:
         url = FIRMS_URL.format(key=FIRMS_MAP_KEY, source=source, bbox=bbox, days=FIRMS_DAYS)
         try:
             text = http.get(url).decode("utf-8", "replace")
         except RuntimeError as exc:
             log.warning("FIRMS %s: %s", source, exc)
+            problems.append(f"{source}: {exc}")
             continue
         if not text.startswith("latitude"):
             log.warning("FIRMS %s returned no CSV (%s)", source, text[:80].strip())
+            problems.append(f"{source}: {text[:80].strip()}")
             continue
         ok += 1
         part = list(csv.DictReader(io.StringIO(text)))
@@ -34,7 +36,7 @@ def fetch_hotspots() -> list[dict]:
         rows.extend(part)
         log.info("FIRMS %s: %d detections", source, len(part))
     if ok == 0:
-        raise RuntimeError("no FIRMS source could be read")
+        raise RuntimeError("no FIRMS source could be read; " + " | ".join(problems))
     return rows
 
 
