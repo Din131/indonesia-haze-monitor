@@ -36,7 +36,7 @@ date_wib,province,hotspots,high_confidence
 2026-10-16,Banten,38,1
 2026-10-16,Bengkulu,17,0
 2026-10-16,DI Yogyakarta,1,0
-2026-10-16,Gorontalo,10,0
+2026-10-16,Gorontalo,12,0
 2026-10-16,Jambi,221,0
 2026-10-16,Jawa Barat,78,1
 2026-10-16,Jawa Tengah,90,7
@@ -49,18 +49,45 @@ date_wib,province,hotspots,high_confidence
 2026-10-16,Kepulauan Bangka Belitung,144,0
 2026-10-16,Kepulauan Riau,3,0
 2026-10-16,Lampung,134,4
-2026-10-16,Luar Indonesia,861,90
-2026-10-16,Maluku,257,6
-2026-10-16,Maluku Utara,94,1
+2026-10-16,Luar Indonesia,2930,91
+2026-10-16,Maluku,454,9
+2026-10-16,Maluku Utara,128,1
 2026-10-16,Nusa Tenggara Barat,236,11
-2026-10-16,Nusa Tenggara Timur,513,23
-2026-10-16,Papua,982,132
-2026-10-16,Papua Barat,89,0
+2026-10-16,Nusa Tenggara Timur,538,23
+2026-10-16,Papua,3778,146
+2026-10-16,Papua Barat,356,0
 2026-10-16,Riau,11,0
 2026-10-16,Sulawesi Barat,20,0
-2026-10-16,Sulawesi Selatan,337,4
-2026-10-16,Sulawesi Tengah,259,4
-2026-10-16,Sulawesi Tenggara,341,14
-2026-10-16,Sulawesi Utara,33,0
+2026-10-16,Sulawesi Selatan,357,5
+2026-10-16,Sulawesi Tengah,269,4
+2026-10-16,Sulawesi Tenggara,350,14
+2026-10-16,Sulawesi Utara,35,0
 2026-10-16,Sumatera Barat,3,0
 2026-10-16,Sumatera Selatan,2797,82
+2026-10-17,Aceh,4,0
+2026-10-17,Bali,1,0
+2026-10-17,Banten,16,0
+2026-10-17,Gorontalo,16,0
+2026-10-17,Jambi,31,0
+2026-10-17,Jawa Barat,21,0
+2026-10-17,Jawa Tengah,22,0
+2026-10-17,Jawa Timur,484,0
+2026-10-17,Kalimantan Barat,742,28
+2026-10-17,Kalimantan Selatan,335,1
+2026-10-17,Kalimantan Tengah,3340,13
+2026-10-17,Kalimantan Timur,590,2
+2026-10-17,Kalimantan Utara,7,0
+2026-10-17,Kepulauan Bangka Belitung,59,0
+2026-10-17,Lampung,85,0
+2026-10-17,Luar Indonesia,45,0
+2026-10-17,Maluku,41,0
+2026-10-17,Maluku Utara,17,0
+2026-10-17,Nusa Tenggara Barat,10,0
+2026-10-17,Nusa Tenggara Timur,19,0
+2026-10-17,Sulawesi Barat,1,0
+2026-10-17,Sulawesi Selatan,56,0
+2026-10-17,Sulawesi Tengah,43,0
+2026-10-17,Sulawesi Tenggara,85,3
+2026-10-17,Sulawesi Utara,12,0
+2026-10-17,Sumatera Selatan,1121,2
+2026-10-17,Sumatera Utara,1,0
