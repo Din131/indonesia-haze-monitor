@@ -31,7 +31,9 @@ def air_quality_issues(rows: list[dict]) -> list[str]:
     if len(missing) > len(CITIES) // 2:
         issues.append(f"air quality missing for most cities: {sorted(missing)}")
     for r in rows:
-        if not 0 <= float(r["pm2_5"]) < 2000:
+        # Severe peat-fire haze can push PM2.5 above 2,000 µg/m³ (Palangka Raya, 2015 and 2019),
+        # so only negative or physically absurd values are rejected.
+        if not 0 <= float(r["pm2_5"]) < 10000:
             issues.append(f"implausible PM2.5 {r['city']} {r['time_wib']}: {r['pm2_5']}")
     return issues
 
