@@ -65,6 +65,8 @@ th{color:var(--muted);font-weight:600}
 footer{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between}
 .wind{color:var(--ink);opacity:.75}
 .leaflet-container{font:inherit}
+.basemap{filter:grayscale(1) contrast(.9) brightness(1.05)}
+@media (prefers-color-scheme:dark){.basemap{filter:grayscale(1) invert(1) brightness(.85) contrast(.9)}}
 @media (max-width:900px){.grid2{grid-template-columns:1fr}.tiles{grid-template-columns:repeat(2,1fr)}#map{height:380px}}
 </style>
 </head>
@@ -117,7 +119,7 @@ footer{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16p
 
   <footer>
     <span>Built by <a href="https://din131.github.io">Pradito Nazaruddin</a></span>
-    <span>Data: NASA FIRMS · Open-Meteo (CAMS) · geoBoundaries · Map © OpenStreetMap, © CARTO</span>
+    <span>Data: NASA FIRMS · Open-Meteo (CAMS) · geoBoundaries · Map © OpenStreetMap contributors</span>
   </footer>
 </main>
 
@@ -134,8 +136,9 @@ footer{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16p
 
   const dark = matchMedia("(prefers-color-scheme: dark)").matches;
   const map = L.map("map", { zoomSnap: 0.5, scrollWheelZoom: false }).setView([-1.5, 113], 4.5);
-  L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`, {
-    maxZoom: 12, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 12, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    className: "basemap"
   }).addTo(map);
   const hotLayer = L.layerGroup().addTo(map), windLayer = L.layerGroup().addTo(map), cityLayer = L.layerGroup().addTo(map);
   let hotspots = null;

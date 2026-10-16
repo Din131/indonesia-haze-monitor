@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 from . import extract, load, transform, validate
 from .config import (AIR_QUALITY, BOUNDARIES_FILE, FIRMS_MAP_KEY, HOTSPOTS_DAILY, HOTSPOTS_RECENT, RUN_LOG, SITE)
-from .geo import ProvinceIndex
+from .geo import ProvinceIndex, indonesian
 
 log = logging.getLogger("haze")
 
@@ -33,8 +33,12 @@ def main(now_utc: datetime | None = None) -> int:
         stage = "province lookup"
         new_hotspots = transform.clean_hotspots(raw, provinces)
         stats["hotspots_fetched"] = len(new_hotspots)
-        recent = transform.merge_recent(load.read_csv(HOTSPOTS_RECENT), new_hotspots, now_utc)
-        daily = transform.daily_by_province(load.read_csv(HOTSPOTS_DAILY), recent, now_utc)
+        old_recent = load.read_csv(HOTSPOTS_RECENT)
+        old_daily = load.read_csv(HOTSPOTS_DAILY)
+        for row in old_recent + old_daily:   # older rows may still carry English names
+            row["province"] = indonesian(row["province"])
+        recent = transform.merge_recent(old_recent, new_hotspots, now_utc)
+        daily = transform.daily_by_province(old_daily, recent, now_utc)
 
         stage = "air quality"
         aq_new = transform.air_quality_rows(extract.fetch_air_quality())

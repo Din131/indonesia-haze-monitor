@@ -28,7 +28,7 @@ flowchart LR
 | Step | What it does | Code |
 |---|---|---|
 | Extract | Reads the last 48 hours of VIIRS detections for the Indonesia bounding box from three satellites, hourly PM2.5 for 12 cities, and current wind on a grid over Sumatra and Kalimantan | [`haze/extract.py`](haze/extract.py) |
-| Transform | Drops low-confidence detections, converts UTC to WIB, assigns each hotspot to a province with a point-in-polygon test, and builds daily counts per province | [`haze/transform.py`](haze/transform.py), [`haze/geo.py`](haze/geo.py) |
+| Transform | Drops low-confidence detections, converts UTC to WIB, assigns each hotspot to a province (Indonesian names) with a point-in-polygon test, and builds daily counts per province | [`haze/transform.py`](haze/transform.py), [`haze/geo.py`](haze/geo.py) |
 | Validate | Blocks the load on duplicates, points outside Indonesia, future timestamps, negative fire power, implausible PM2.5 or missing cities | [`haze/validate.py`](haze/validate.py) |
 | Load | Keeps 7 days of detailed hotspots, a growing history of daily counts per province and hourly air quality, then publishes JSON for the dashboard | [`haze/load.py`](haze/load.py) |
 | Orchestrate | Every 3 hours; tests run before each load; data is committed only when it changed | [`.github/workflows/update.yml`](.github/workflows/update.yml) |
@@ -64,7 +64,7 @@ FIRMS_MAP_KEY=your_key python -m haze.run
 - Fire hotspots: NASA FIRMS, VIIRS 375 m (Suomi NPP, NOAA-20, NOAA-21)
 - Air quality and wind: [Open-Meteo](https://open-meteo.com) (CAMS), CC BY 4.0
 - Province boundaries: [geoBoundaries](https://www.geoboundaries.org), CC BY 4.0
-- Base map: © OpenStreetMap contributors, © CARTO
+- Base map: © OpenStreetMap contributors
 
 ## Author
 

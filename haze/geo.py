@@ -1,5 +1,26 @@
 """Assign each hotspot to a province with a point-in-polygon test (no GIS libraries)."""
 
+OUTSIDE = "Luar Indonesia"
+
+# geoBoundaries uses English names; the dashboard shows the official Indonesian ones.
+INDONESIAN_NAMES = {
+    "Aceh": "Aceh", "Bali": "Bali", "Bangka-Belitung Islands": "Kepulauan Bangka Belitung", "Banten": "Banten",
+    "Bengkulu": "Bengkulu", "Central Java": "Jawa Tengah", "Central Kalimantan": "Kalimantan Tengah",
+    "Central Sulawesi": "Sulawesi Tengah", "East Java": "Jawa Timur", "East Kalimantan": "Kalimantan Timur",
+    "East Nusa Tenggara": "Nusa Tenggara Timur", "Gorontalo": "Gorontalo", "Jakarta Special Capital Region": "DKI Jakarta",
+    "Jambi": "Jambi", "Lampung": "Lampung", "Maluku": "Maluku", "North Kalimantan": "Kalimantan Utara",
+    "North Maluku": "Maluku Utara", "North Sulawesi": "Sulawesi Utara", "North Sumatra": "Sumatera Utara",
+    "Papua": "Papua", "Riau": "Riau", "Riau Islands": "Kepulauan Riau", "South Kalimantan": "Kalimantan Selatan",
+    "South Sulawesi": "Sulawesi Selatan", "South Sumatra": "Sumatera Selatan", "Southeast Sulawesi": "Sulawesi Tenggara",
+    "Special Region of Yogyakarta": "DI Yogyakarta", "West Java": "Jawa Barat", "West Kalimantan": "Kalimantan Barat",
+    "West Nusa Tenggara": "Nusa Tenggara Barat", "West Papua": "Papua Barat", "West Sulawesi": "Sulawesi Barat",
+    "West Sumatra": "Sumatera Barat", "Outside Indonesia": OUTSIDE,
+}
+
+
+def indonesian(name: str) -> str:
+    return INDONESIAN_NAMES.get(name, name)
+
 
 def _rings(geometry: dict) -> list[list[list[list[float]]]]:
     if geometry["type"] == "Polygon":
@@ -28,7 +49,7 @@ class ProvinceIndex:
     def __init__(self, geojson: dict, name_field: str = "shapeName"):
         self.polys = []
         for f in geojson.get("features", []):
-            name = (f.get("properties") or {}).get(name_field, "Unknown")
+            name = indonesian((f.get("properties") or {}).get(name_field, "Unknown"))
             for poly in _rings(f.get("geometry") or {}):
                 if not poly or len(poly[0]) < 4:
                     continue
@@ -41,7 +62,7 @@ class ProvinceIndex:
         key = (round(lon, 4), round(lat, 4))
         if key in self._cache:
             return self._cache[key]
-        result = "Outside Indonesia"
+        result = OUTSIDE
         for name, x0, y0, x1, y1, poly in self.polys:
             if x0 <= lon <= x1 and y0 <= lat <= y1 and _in_ring(lon, lat, poly[0]) \
                     and not any(_in_ring(lon, lat, hole) for hole in poly[1:]):

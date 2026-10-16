@@ -15,7 +15,7 @@ NOW = datetime(2026, 10, 16, 6, 0, tzinfo=timezone.utc)  # 13:00 WIB
 # Two square "provinces" with a hole in the second one.
 BOUNDARIES = {"type": "FeatureCollection", "features": [
     {"properties": {"shapeName": "Riau"}, "geometry": {"type": "Polygon", "coordinates": [[[100, -1], [103, -1], [103, 2], [100, 2], [100, -1]]]}},
-    {"properties": {"shapeName": "Kalimantan Tengah"}, "geometry": {"type": "MultiPolygon", "coordinates": [[
+    {"properties": {"shapeName": "Central Kalimantan"}, "geometry": {"type": "MultiPolygon", "coordinates": [[
         [[111, -4], [115, -4], [115, 0], [111, 0], [111, -4]],
         [[112, -3], [113, -3], [113, -2], [112, -2], [112, -3]],
     ]]}},
@@ -45,7 +45,7 @@ class GeoTest(unittest.TestCase):
         self.assertEqual(self.idx.lookup(101.5, 0.5), "Riau")
 
     def test_point_in_hole_is_outside(self):
-        self.assertEqual(self.idx.lookup(112.5, -2.5), "Outside Indonesia")
+        self.assertEqual(self.idx.lookup(112.5, -2.5), "Luar Indonesia")
 
     def test_multipolygon(self):
         self.assertEqual(self.idx.lookup(114.0, -1.0), "Kalimantan Tengah")

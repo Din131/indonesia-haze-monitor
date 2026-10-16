@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from .config import CITIES
+from .geo import OUTSIDE
 from .transform import HOTSPOT_FIELDS, WIB, pm25_category
 
 DAILY_FIELDS = ["date_wib", "province", "hotspots", "high_confidence"]
@@ -102,7 +103,7 @@ def publish(site: Path, recent: list[dict], daily: list[dict], aq_rows: list[dic
     per_prov = defaultdict(lambda: defaultdict(int))
     prov30 = defaultdict(int)
     for r in daily:
-        if r["date_wib"] < start90 or r["province"] == "Outside Indonesia":
+        if r["date_wib"] < start90 or r["province"] == OUTSIDE:
             continue
         n = int(r["hotspots"])
         totals[r["date_wib"]] += n
@@ -123,7 +124,7 @@ def publish(site: Path, recent: list[dict], daily: list[dict], aq_rows: list[dic
         "hotspots_24h": len(last24),
         "hotspots_24h_high": sum(1 for f in last24 if f["properties"]["c"] == "h"),
         "hotspots_7d": len(features),
-        "provinces_24h": [{"province": p, "hotspots": n} for p, n in sorted(by_prov.items(), key=lambda kv: -kv[1]) if p != "Outside Indonesia"][:10],
+        "provinces_24h": [{"province": p, "hotspots": n} for p, n in sorted(by_prov.items(), key=lambda kv: -kv[1]) if p != OUTSIDE][:10],
         "worst_city": max(cities, key=lambda c: c["mean_24h"]) if cities else None,
         "sources": {
             "hotspots": "NASA FIRMS VIIRS (Suomi NPP, NOAA-20, NOAA-21), nominal and high confidence",
