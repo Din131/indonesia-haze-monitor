@@ -22,20 +22,30 @@ def _in_ring(x: float, y: float, ring: list[list[float]]) -> bool:
 
 
 class ProvinceIndex:
+    """Province lookup. Each polygon (island) keeps its own bounding box, so a point is
+    only tested against the few polygons whose box contains it."""
+
     def __init__(self, geojson: dict, name_field: str = "shapeName"):
-        self.items = []
+        self.polys = []
         for f in geojson.get("features", []):
-            polys = _rings(f["geometry"])
-            xs = [p[0] for poly in polys for p in poly[0]]
-            ys = [p[1] for poly in polys for p in poly[0]]
-            if xs:
-                self.items.append((f["properties"].get(name_field, "Unknown"), (min(xs), min(ys), max(xs), max(ys)), polys))
+            name = (f.get("properties") or {}).get(name_field, "Unknown")
+            for poly in _rings(f.get("geometry") or {}):
+                if not poly or len(poly[0]) < 4:
+                    continue
+                xs = [p[0] for p in poly[0]]
+                ys = [p[1] for p in poly[0]]
+                self.polys.append((name, min(xs), min(ys), max(xs), max(ys), poly))
+        self._cache: dict = {}
 
     def lookup(self, lon: float, lat: float) -> str:
-        for name, (x0, y0, x1, y1), polys in self.items:
-            if not (x0 <= lon <= x1 and y0 <= lat <= y1):
-                continue
-            for poly in polys:
-                if _in_ring(lon, lat, poly[0]) and not any(_in_ring(lon, lat, hole) for hole in poly[1:]):
-                    return name
-        return "Outside Indonesia"
+        key = (round(lon, 4), round(lat, 4))
+        if key in self._cache:
+            return self._cache[key]
+        result = "Outside Indonesia"
+        for name, x0, y0, x1, y1, poly in self.polys:
+            if x0 <= lon <= x1 and y0 <= lat <= y1 and _in_ring(lon, lat, poly[0]) \
+                    and not any(_in_ring(lon, lat, hole) for hole in poly[1:]):
+                result = name
+                break
+        self._cache[key] = result
+        return result
