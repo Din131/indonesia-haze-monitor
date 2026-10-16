@@ -1,3 +1,4 @@
 run_at_utc,hotspots_fetched,hotspots_7d,aq_rows,status,error
 2026-10-16T16:33+00:00,23436,0,0,failed at validate: ValidationError,7 data-quality issue(s): - implausible PM2.5 Palangka Raya 2026-10-14T15:00: 2265.0 - implausible PM2.5 Palangka Raya 2026-10-14T16:00: 2943.0 - implausible PM2.5 Palangka Raya 2026-10-14T17:00: 3248.5 - implausible PM2.5 Palangka Raya 2026-10-14T18:00: 3010.0 - implausible PM2.5 Palangka Raya 2026-
 2026-10-16T16:39+00:00,23436,23436,864,success,
+2026-10-16T16:42+00:00,0,0,0,failed at hotspots: RuntimeError,no FIRMS source could be read
