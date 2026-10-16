@@ -4,3 +4,4 @@ run_at_utc,hotspots_fetched,hotspots_7d,aq_rows,status,error
 2026-10-16T16:42+00:00,0,0,0,failed at hotspots: RuntimeError,no FIRMS source could be read
 2026-10-16T16:53+00:00,23436,23436,864,success,
 2026-10-16T21:16+00:00,36071,36071,864,success,
+2026-10-16T23:39+00:00,36073,36073,864,success,
