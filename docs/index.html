@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indonesia Haze Monitor</title>
+<meta name="description" content="Forest-fire hotspots, haze (PM2.5) and wind across Indonesia, updated every 3 hours by an automated data pipeline.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#f1efec; --surface:#ffffff; --ink:#22201d; --muted:#6a645c; --line:#e2ddd6; --grid:#eeeae4;
+  --accent:#b8401f; --bar:#c9572f;
+  --age0:#c7321c; --age1:#ef7a3f; --age2:#f6bb7c;
+  --f-head:"Libre Franklin","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#141210; --surface:#1d1a17; --ink:#ece7e1; --muted:#a59d93; --line:#322d28; --grid:#26221e;
+  --accent:#f08a5d; --bar:#e0764a;
+  --age0:#ff5a3c; --age1:#f39256; --age2:#b98a5c; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);padding:28px max(16px,env(safe-area-inset-left)) 44px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font:700 clamp(26px,4vw,36px)/1.15 var(--f-head);margin:0;letter-spacing:-.01em}
+h2{font:700 17px/1.3 var(--f-head);margin:0 0 12px}
+.sub{margin:6px 0 0;color:var(--muted);max-width:75ch}
+a{color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;min-width:0}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.tile{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile span{font-size:13px;color:var(--muted)}
+.tile b{font:700 26px/1.1 var(--f-head);font-variant-numeric:tabular-nums}
+.tile small{font-size:13px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px}
+.maphead{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px}
+.maphead h2{margin:0}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:none;color:var(--muted);font:600 13px/1 var(--f-head);padding:8px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#map{height:480px;border-radius:4px;background:var(--grid)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;font-size:14px}
+.bar .track{grid-column:1/-1;height:8px;background:var(--grid);border-radius:4px;overflow:hidden}
+.bar .fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0}
+.bar b{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted);font-size:14px}
+.chart{position:relative;height:220px}
+.chart svg{display:block;width:100%;height:100%}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--surface);font-size:13px;padding:6px 9px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-115%)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);font-size:14px;text-align:right}
+th:first-child,td:first-child,th:nth-child(4),td:nth-child(4){text-align:left}
+th{color:var(--muted);font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px}
+.chip i{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid rgba(0,0,0,.25)}
+.tbl{overflow-x:auto}
+.note{font-size:13px;color:var(--muted);border-left:3px solid var(--accent);padding:4px 0 4px 12px}
+footer{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between}
+.wind{color:var(--ink);opacity:.75}
+.leaflet-container{font:inherit}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}.tiles{grid-template-columns:repeat(2,1fr)}#map{height:380px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>Indonesia Haze Monitor</h1>
+    <p class="sub">Satellite fire hotspots, haze (PM2.5) and wind across Indonesia, refreshed every 3 hours by an automated <a href="https://github.com/Din131/indonesia-haze-monitor">data pipeline</a>. <span id="updated"></span></p>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="grid2">
+    <section class="card" aria-labelledby="map-title">
+      <div class="maphead">
+        <h2 id="map-title">Hotspots and wind</h2>
+        <div class="seg" id="period" role="group" aria-label="Period">
+          <button type="button" data-h="24" aria-pressed="true">Last 24 hours</button>
+          <button type="button" data-h="168">Last 7 days</button>
+        </div>
+      </div>
+      <div id="map" role="region" aria-label="Map of fire hotspots, city air quality and wind"></div>
+      <div class="legend">
+        <span><i style="background:var(--age0)"></i>Detected in the last 24 h</span>
+        <span><i style="background:var(--age1)"></i>1 to 3 days ago</span>
+        <span><i style="background:var(--age2)"></i>3 to 7 days ago</span>
+        <span>➤ Wind direction (longer = stronger)</span>
+        <span>■ Squares: city PM2.5</span>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="prov-title">
+      <h2 id="prov-title">Provinces, last 24 hours</h2>
+      <div class="bars" id="provinces"><p class="muted">Loading…</p></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="trend-title">
+    <h2 id="trend-title">Daily hotspots, last 90 days</h2>
+    <div class="chart" id="trend"></div>
+  </section>
+
+  <section class="card" aria-labelledby="aq-title">
+    <h2 id="aq-title">Air quality in haze-affected cities</h2>
+    <div class="tbl" id="aq"></div>
+    <p class="muted" style="margin:10px 0 0">PM2.5 in µg/m³ from the CAMS global model (modelled, not a ground sensor). Category uses the 24-hour average and US EPA breakpoints.</p>
+  </section>
+
+  <p class="note">This is an independent portfolio project, not an official source. Satellite hotspots can include non-fire heat sources and miss fires under cloud. For official information see <a href="https://sipongi.kemenlhk.go.id" rel="noopener">SiPongi (KLHK)</a> and <a href="https://www.bmkg.go.id" rel="noopener">BMKG</a>.</p>
+
+  <footer>
+    <span>Built by <a href="https://din131.github.io">Pradito Nazaruddin</a></span>
+    <span>Data: NASA FIRMS · Open-Meteo (CAMS) · geoBoundaries · Map © OpenStreetMap, © CARTO</span>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const nf = new Intl.NumberFormat("en-US");
+  const AQ = { "Good": "#00e400", "Moderate": "#ffff00", "Unhealthy for sensitive groups": "#ff7e00",
+               "Unhealthy": "#ff0000", "Very unhealthy": "#8f3f97", "Hazardous": "#7e0023" };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const fmtDay = d => new Date(d + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const map = L.map("map", { zoomSnap: 0.5, scrollWheelZoom: false }).setView([-1.5, 113], 4.5);
+  L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`, {
+    maxZoom: 12, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }).addTo(map);
+  const hotLayer = L.layerGroup().addTo(map), windLayer = L.layerGroup().addTo(map), cityLayer = L.layerGroup().addTo(map);
+  let hotspots = null;
+
+  function drawHotspots(hours) {
+    hotLayer.clearLayers();
+    const feats = hotspots.features.filter(f => f.properties.age <= hours).sort((a, b) => b.properties.age - a.properties.age);
+    for (const f of feats) {
+      const p = f.properties, [lon, lat] = f.geometry.coordinates;
+      const color = p.age <= 24 ? css("--age0") : p.age <= 72 ? css("--age1") : css("--age2");
+      L.circleMarker([lat, lon], { radius: p.c === "h" ? 4.5 : 3.5, color: css("--surface"), weight: 1, fillColor: color, fillOpacity: .9 })
+        .bindTooltip(`<b>${esc(p.prov)}</b><br>${esc(p.d)} ${esc(p.t)} WIB · ${p.c === "h" ? "high" : "nominal"} confidence<br>Fire radiative power ${p.frp} MW · ${esc(p.sat)}`)
+        .addTo(hotLayer);
+    }
+  }
+
+  function drawWind(points) {
+    for (const w of points) {
+      const len = Math.max(14, Math.min(34, 10 + w.speed_kmh));
+      const icon = L.divIcon({ className: "wind", iconSize: [len, len], html:
+        `<svg width="${len}" height="${len}" viewBox="0 0 24 24" style="transform:rotate(${(w.from_deg + 180) % 360}deg)"><path d="M12 22V3M6 9l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>` });
+      L.marker([w.lat, w.lon], { icon, interactive: true, keyboard: false })
+        .bindTooltip(`Wind ${Math.round(w.speed_kmh)} km/h from ${Math.round(w.from_deg)}°`).addTo(windLayer);
+    }
+  }
+
+  function drawCities(cities) {
+    for (const c of cities) {
+      L.marker([c.lat, c.lon], { icon: L.divIcon({ className: "", iconSize: [14, 14],
+        html: `<span style="display:block;width:14px;height:14px;background:${AQ[c.category]};border:2px solid ${css("--ink")};border-radius:2px"></span>` }) })
+        .bindTooltip(`<b>${esc(c.city)}</b><br>PM2.5 now ${c.pm2_5} µg/m³<br>24 h average ${c.mean_24h} · ${esc(c.category)}`).addTo(cityLayer);
+    }
+  }
+
+  function tiles(s) {
+    const w = s.worst_city;
+    $("tiles").innerHTML = `
+      <div class="tile"><span>Hotspots, last 24 h</span><b>${nf.format(s.hotspots_24h)}</b><small>${nf.format(s.hotspots_24h_high)} high confidence</small></div>
+      <div class="tile"><span>Hotspots, last 7 days</span><b>${nf.format(s.hotspots_7d)}</b><small>VIIRS, 3 satellites</small></div>
+      <div class="tile"><span>Most affected province, 24 h</span><b style="font-size:20px">${s.provinces_24h[0] ? esc(s.provinces_24h[0].province) : "None"}</b><small>${s.provinces_24h[0] ? nf.format(s.provinces_24h[0].hotspots) + " hotspots" : "No hotspots detected"}</small></div>
+      <div class="tile"><span>Worst air, 24 h average</span><b style="font-size:20px">${w ? esc(w.city) : "–"}</b><small>${w ? `<span class="chip"><i style="background:${AQ[w.category]}"></i>${w.mean_24h} µg/m³ · ${esc(w.category)}</span>` : ""}</small></div>`;
+  }
+
+  function provinces(list) {
+    if (!list.length) { $("provinces").innerHTML = '<p class="muted">No hotspots in the last 24 hours.</p>'; return; }
+    const max = list[0].hotspots;
+    $("provinces").innerHTML = list.map(p => `
+      <div class="bar"><span>${esc(p.province)}</span><b>${nf.format(p.hotspots)}</b>
+        <div class="track"><div class="fill" style="width:${Math.max(2, p.hotspots / max * 100)}%"></div></div></div>`).join("");
+  }
+
+  function trend(t) {
+    const el = $("trend"), W = el.clientWidth, H = el.clientHeight, m = { l: 44, r: 8, t: 10, b: 26 };
+    const max = Math.max(1, ...t.total), step0 = max / 4, mag = 10 ** Math.floor(Math.log10(step0 || 1));
+    const step = [1, 2, 2.5, 5, 10].map(k => k * mag).find(s => s >= step0) || 1, top = Math.ceil(max / step) * step;
+    const n = t.dates.length, bw = (W - m.l - m.r) / n, y = v => m.t + (1 - v / top) * (H - m.t - m.b);
+    const ticks = []; for (let v = 0; v <= top + 1e-9; v += step) ticks.push(v);
+    const labels = W < 560 ? [0, 45, 89] : [0, 30, 60, 89];
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Daily hotspot count over the last 90 days">
+      ${ticks.map(v => `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="12" fill="var(--muted)">${nf.format(v)}</text>`).join("")}
+      ${t.total.map((v, i) => v ? `<rect x="${m.l + i * bw + 1}" y="${y(v)}" width="${Math.max(1, bw - 2)}" height="${y(0) - y(v)}" rx="${Math.min(2, bw / 4)}" fill="var(--bar)"/>` : "").join("")}
+      ${labels.map((i, k) => `<text x="${m.l + i * bw + bw / 2}" y="${H - 8}" font-size="12" fill="var(--muted)" text-anchor="${k === 0 ? "start" : k === labels.length - 1 ? "end" : "middle"}">${fmtDay(t.dates[i])}</text>`).join("")}
+      <rect id="hl" y="${m.t}" height="${H - m.t - m.b}" width="${bw}" fill="var(--ink)" opacity=".08" visibility="hidden"/>
+    </svg><div class="tip" hidden></div>`;
+    const svg = el.querySelector("svg"), tip = el.querySelector(".tip"), hl = svg.querySelector("#hl");
+    svg.addEventListener("pointermove", e => {
+      const r = svg.getBoundingClientRect(), fx = (e.clientX - r.left) * W / r.width;
+      const i = Math.floor((fx - m.l) / bw); if (i < 0 || i >= n) return;
+      hl.setAttribute("x", m.l + i * bw); hl.setAttribute("visibility", "visible");
+      const top3 = Object.entries(t.provinces).map(([p, s]) => [p, s[i]]).filter(([, v]) => v).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      tip.hidden = false; tip.style.left = ((m.l + i * bw + bw / 2) * r.width / W) + "px"; tip.style.top = (y(t.total[i]) * r.height / H) + "px";
+      tip.innerHTML = `${fmtDay(t.dates[i])}: <b>${nf.format(t.total[i])}</b> hotspots${top3.length ? "<br>" + top3.map(([p, v]) => `${esc(p)} ${nf.format(v)}`).join(" · ") : ""}`;
+    });
+    svg.addEventListener("pointerleave", () => { tip.hidden = true; hl.setAttribute("visibility", "hidden"); });
+  }
+
+  function aqTable(cities) {
+    const rows = [...cities].sort((a, b) => b.mean_24h - a.mean_24h);
+    $("aq").innerHTML = `<table><thead><tr><th>City</th><th>PM2.5 now</th><th>24 h average</th><th>Category</th></tr></thead><tbody>
+      ${rows.map(c => `<tr><td>${esc(c.city)}${c.country !== "Indonesia" ? ` <span class="muted">(${esc(c.country)})</span>` : ""}</td><td>${c.pm2_5}</td><td>${c.mean_24h}</td><td><span class="chip"><i style="background:${AQ[c.category]}"></i>${esc(c.category)}</span></td></tr>`).join("")}
+      </tbody></table>`;
+  }
+
+  $("period").addEventListener("click", e => {
+    const b = e.target.closest("[data-h]"); if (!b || !hotspots) return;
+    $("period").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    drawHotspots(+b.dataset.h);
+  });
+
+  const get = f => fetch("data/" + f, { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error(f); return r.json(); });
+  Promise.all([get("summary.json"), get("hotspots.geojson"), get("wind.json"), get("air_quality.json"), get("trend.json")])
+    .then(([s, h, w, aq, t]) => {
+      hotspots = h;
+      $("updated").textContent = `Last update: ${s.generated_at_wib}.`;
+      tiles(s); provinces(s.provinces_24h); drawHotspots(24); drawWind(w); drawCities(aq); aqTable(aq); trend(t);
+      let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => trend(t), 150); });
+    })
+    .catch(() => { $("provinces").innerHTML = '<p class="muted">No data yet. It appears after the first pipeline run.</p>'; });
+})();
+</script>
+</body>
+</html>
