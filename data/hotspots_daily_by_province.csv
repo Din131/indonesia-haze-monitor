@@ -195,30 +195,55 @@ date_wib,province,hotspots,high_confidence
 2026-10-21,Bengkulu,13,0
 2026-10-21,DI Yogyakarta,1,0
 2026-10-21,DKI Jakarta,1,0
-2026-10-21,Gorontalo,163,1
+2026-10-21,Gorontalo,174,1
 2026-10-21,Jambi,1059,13
 2026-10-21,Jawa Barat,52,3
 2026-10-21,Jawa Tengah,130,4
 2026-10-21,Jawa Timur,394,13
 2026-10-21,Kalimantan Barat,838,25
-2026-10-21,Kalimantan Selatan,1558,106
+2026-10-21,Kalimantan Selatan,1562,107
 2026-10-21,Kalimantan Tengah,5562,275
-2026-10-21,Kalimantan Timur,1295,41
+2026-10-21,Kalimantan Timur,1299,41
 2026-10-21,Kalimantan Utara,14,1
 2026-10-21,Kepulauan Bangka Belitung,180,14
 2026-10-21,Lampung,663,40
-2026-10-21,Luar Indonesia,532,30
-2026-10-21,Maluku,306,5
-2026-10-21,Maluku Utara,271,0
-2026-10-21,Nusa Tenggara Barat,317,23
-2026-10-21,Nusa Tenggara Timur,784,17
-2026-10-21,Papua,867,191
-2026-10-21,Papua Barat,101,5
+2026-10-21,Luar Indonesia,1235,32
+2026-10-21,Maluku,392,5
+2026-10-21,Maluku Utara,367,0
+2026-10-21,Nusa Tenggara Barat,324,23
+2026-10-21,Nusa Tenggara Timur,829,17
+2026-10-21,Papua,2109,193
+2026-10-21,Papua Barat,460,5
 2026-10-21,Riau,1,0
-2026-10-21,Sulawesi Barat,93,5
-2026-10-21,Sulawesi Selatan,658,28
-2026-10-21,Sulawesi Tengah,1160,30
-2026-10-21,Sulawesi Tenggara,712,1
-2026-10-21,Sulawesi Utara,80,10
+2026-10-21,Sulawesi Barat,102,6
+2026-10-21,Sulawesi Selatan,751,32
+2026-10-21,Sulawesi Tengah,1256,30
+2026-10-21,Sulawesi Tenggara,783,3
+2026-10-21,Sulawesi Utara,85,10
 2026-10-21,Sumatera Barat,2,0
 2026-10-21,Sumatera Selatan,3417,77
+2026-10-22,Aceh,1,0
+2026-10-22,Banten,23,0
+2026-10-22,Gorontalo,37,0
+2026-10-22,Jambi,223,0
+2026-10-22,Jawa Barat,26,2
+2026-10-22,Jawa Tengah,49,1
+2026-10-22,Jawa Timur,293,0
+2026-10-22,Kalimantan Barat,741,7
+2026-10-22,Kalimantan Selatan,1058,3
+2026-10-22,Kalimantan Tengah,8972,102
+2026-10-22,Kalimantan Timur,1025,5
+2026-10-22,Kepulauan Bangka Belitung,146,0
+2026-10-22,Lampung,112,1
+2026-10-22,Luar Indonesia,96,0
+2026-10-22,Maluku,33,1
+2026-10-22,Maluku Utara,31,0
+2026-10-22,Nusa Tenggara Barat,10,0
+2026-10-22,Nusa Tenggara Timur,24,0
+2026-10-22,Riau,8,0
+2026-10-22,Sulawesi Barat,14,0
+2026-10-22,Sulawesi Selatan,242,2
+2026-10-22,Sulawesi Tengah,288,3
+2026-10-22,Sulawesi Tenggara,119,0
+2026-10-22,Sulawesi Utara,26,0
+2026-10-22,Sumatera Selatan,1697,33
