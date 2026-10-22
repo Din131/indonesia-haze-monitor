@@ -226,7 +226,7 @@ date_wib,province,hotspots,high_confidence
 2026-10-22,Banten,29,0
 2026-10-22,Bengkulu,46,0
 2026-10-22,DI Yogyakarta,1,0
-2026-10-22,Gorontalo,142,6
+2026-10-22,Gorontalo,148,6
 2026-10-22,Jambi,368,1
 2026-10-22,Jawa Barat,99,3
 2026-10-22,Jawa Tengah,89,2
@@ -238,17 +238,47 @@ date_wib,province,hotspots,high_confidence
 2026-10-22,Kepulauan Bangka Belitung,316,7
 2026-10-22,Kepulauan Riau,2,0
 2026-10-22,Lampung,293,6
-2026-10-22,Luar Indonesia,413,6
-2026-10-22,Maluku,208,4
-2026-10-22,Maluku Utara,228,0
+2026-10-22,Luar Indonesia,700,6
+2026-10-22,Maluku,274,4
+2026-10-22,Maluku Utara,251,0
 2026-10-22,Nusa Tenggara Barat,184,5
-2026-10-22,Nusa Tenggara Timur,435,9
-2026-10-22,Papua,808,59
-2026-10-22,Papua Barat,189,6
+2026-10-22,Nusa Tenggara Timur,445,9
+2026-10-22,Papua,2008,60
+2026-10-22,Papua Barat,385,6
 2026-10-22,Riau,13,0
 2026-10-22,Sulawesi Barat,52,5
-2026-10-22,Sulawesi Selatan,454,25
-2026-10-22,Sulawesi Tengah,613,18
-2026-10-22,Sulawesi Tenggara,307,9
-2026-10-22,Sulawesi Utara,83,2
+2026-10-22,Sulawesi Selatan,457,25
+2026-10-22,Sulawesi Tengah,617,18
+2026-10-22,Sulawesi Tenggara,321,9
+2026-10-22,Sulawesi Utara,84,2
 2026-10-22,Sumatera Selatan,2564,52
+2026-10-23,Bali,1,0
+2026-10-23,Banten,9,0
+2026-10-23,Bengkulu,1,0
+2026-10-23,DI Yogyakarta,1,0
+2026-10-23,Gorontalo,129,0
+2026-10-23,Jambi,470,16
+2026-10-23,Jawa Barat,29,0
+2026-10-23,Jawa Tengah,26,0
+2026-10-23,Jawa Timur,349,1
+2026-10-23,Kalimantan Barat,896,12
+2026-10-23,Kalimantan Selatan,1207,2
+2026-10-23,Kalimantan Tengah,15972,305
+2026-10-23,Kalimantan Timur,657,4
+2026-10-23,Kalimantan Utara,5,0
+2026-10-23,Kepulauan Bangka Belitung,168,0
+2026-10-23,Lampung,51,0
+2026-10-23,Luar Indonesia,51,0
+2026-10-23,Maluku,62,0
+2026-10-23,Maluku Utara,65,1
+2026-10-23,Nusa Tenggara Barat,27,0
+2026-10-23,Nusa Tenggara Timur,36,1
+2026-10-23,Papua Barat,2,0
+2026-10-23,Riau,11,0
+2026-10-23,Sulawesi Barat,40,0
+2026-10-23,Sulawesi Selatan,164,0
+2026-10-23,Sulawesi Tengah,377,4
+2026-10-23,Sulawesi Tenggara,155,0
+2026-10-23,Sulawesi Utara,21,0
+2026-10-23,Sumatera Selatan,1418,26
+2026-10-23,Sumatera Utara,1,0
