@@ -319,16 +319,16 @@ date_wib,province,hotspots,high_confidence
 2026-10-25,Banten,2,0
 2026-10-25,DI Yogyakarta,1,0
 2026-10-25,Gorontalo,65,0
-2026-10-25,Jambi,54,0
+2026-10-25,Jambi,63,0
 2026-10-25,Jawa Barat,1,0
 2026-10-25,Jawa Tengah,1,0
-2026-10-25,Jawa Timur,55,0
-2026-10-25,Kalimantan Barat,433,13
+2026-10-25,Jawa Timur,61,0
+2026-10-25,Kalimantan Barat,434,13
 2026-10-25,Kalimantan Selatan,71,0
-2026-10-25,Kalimantan Tengah,1357,7
+2026-10-25,Kalimantan Tengah,1489,7
 2026-10-25,Kalimantan Timur,80,0
-2026-10-25,Kepulauan Bangka Belitung,62,0
-2026-10-25,Lampung,38,0
+2026-10-25,Kepulauan Bangka Belitung,109,0
+2026-10-25,Lampung,69,0
 2026-10-25,Luar Indonesia,5,0
 2026-10-25,Maluku,87,0
 2026-10-25,Maluku Utara,130,0
@@ -340,4 +340,4 @@ date_wib,province,hotspots,high_confidence
 2026-10-25,Sulawesi Tengah,29,0
 2026-10-25,Sulawesi Tenggara,75,0
 2026-10-25,Sulawesi Utara,9,0
-2026-10-25,Sumatera Selatan,508,4
+2026-10-25,Sumatera Selatan,808,6
