@@ -36,3 +36,4 @@ run_at_utc,hotspots_fetched,hotspots_7d,aq_rows,status,error
 2026-10-23T17:13+00:00,53308,182836,864,success,
 2026-10-23T21:28+00:00,66328,188650,864,success,
 2026-10-24T04:43+00:00,23536,185176,864,success,
+2026-10-24T11:09+00:00,0,0,0,failed at hotspots: RuntimeError,no FIRMS source could be read; VIIRS_SNPP_NRT: request failed after 3 attempts: URLError | VIIRS_NOAA20_NRT: request failed after 3 attempts: URLError | VIIRS_NOAA21_NRT: request failed after 3 attempts: URLError
