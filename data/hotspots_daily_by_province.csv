@@ -316,28 +316,31 @@ date_wib,province,hotspots,high_confidence
 2026-10-24,Sulawesi Utara,31,1
 2026-10-24,Sumatera Selatan,1947,32
 2026-10-24,Sumatera Utara,1,0
+2026-10-25,Bali,1,0
 2026-10-25,Banten,2,0
+2026-10-25,Bengkulu,2,0
 2026-10-25,DI Yogyakarta,1,0
-2026-10-25,Gorontalo,65,0
+2026-10-25,Gorontalo,79,1
 2026-10-25,Jambi,63,0
 2026-10-25,Jawa Barat,1,0
-2026-10-25,Jawa Tengah,1,0
-2026-10-25,Jawa Timur,61,0
-2026-10-25,Kalimantan Barat,434,13
-2026-10-25,Kalimantan Selatan,71,0
-2026-10-25,Kalimantan Tengah,1489,7
-2026-10-25,Kalimantan Timur,80,0
-2026-10-25,Kepulauan Bangka Belitung,109,0
+2026-10-25,Jawa Tengah,2,0
+2026-10-25,Jawa Timur,62,0
+2026-10-25,Kalimantan Barat,549,14
+2026-10-25,Kalimantan Selatan,132,2
+2026-10-25,Kalimantan Tengah,1525,7
+2026-10-25,Kalimantan Timur,291,2
+2026-10-25,Kalimantan Utara,4,0
+2026-10-25,Kepulauan Bangka Belitung,123,0
 2026-10-25,Lampung,69,0
-2026-10-25,Luar Indonesia,5,0
-2026-10-25,Maluku,87,0
-2026-10-25,Maluku Utara,130,0
-2026-10-25,Nusa Tenggara Barat,3,0
-2026-10-25,Nusa Tenggara Timur,25,0
-2026-10-25,Papua,10,0
-2026-10-25,Papua Barat,64,0
-2026-10-25,Sulawesi Selatan,95,1
-2026-10-25,Sulawesi Tengah,29,0
-2026-10-25,Sulawesi Tenggara,75,0
-2026-10-25,Sulawesi Utara,9,0
+2026-10-25,Luar Indonesia,9754,9403
+2026-10-25,Maluku,145,1
+2026-10-25,Maluku Utara,217,0
+2026-10-25,Nusa Tenggara Barat,168,0
+2026-10-25,Nusa Tenggara Timur,426,7
+2026-10-25,Papua,885,73
+2026-10-25,Papua Barat,85,3
+2026-10-25,Sulawesi Selatan,217,6
+2026-10-25,Sulawesi Tengah,172,0
+2026-10-25,Sulawesi Tenggara,226,1
+2026-10-25,Sulawesi Utara,26,0
 2026-10-25,Sumatera Selatan,808,6
