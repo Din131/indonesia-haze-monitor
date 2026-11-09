@@ -761,7 +761,7 @@ date_wib,province,hotspots,high_confidence
 2026-11-08,Sulawesi Utara,6,0
 2026-11-08,Sumatera Selatan,171,0
 2026-11-08,Sumatera Utara,4,0
-2026-11-09,Aceh,1,0
+2026-11-09,Aceh,5,0
 2026-11-09,Bali,1,0
 2026-11-09,Banten,4,0
 2026-11-09,Jawa Barat,2,0
@@ -773,10 +773,12 @@ date_wib,province,hotspots,high_confidence
 2026-11-09,Kepulauan Bangka Belitung,5,0
 2026-11-09,Kepulauan Riau,2,0
 2026-11-09,Lampung,1,0
-2026-11-09,Luar Indonesia,40,1
+2026-11-09,Luar Indonesia,41,1
 2026-11-09,Maluku,1,0
 2026-11-09,Maluku Utara,2,0
 2026-11-09,Nusa Tenggara Barat,2,0
+2026-11-09,Papua,1,0
+2026-11-09,Papua Barat,6,0
 2026-11-09,Sulawesi Selatan,11,0
 2026-11-09,Sulawesi Tengah,5,0
 2026-11-09,Sulawesi Tenggara,25,0
