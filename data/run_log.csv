@@ -109,3 +109,4 @@ run_at_utc,hotspots_fetched,hotspots_7d,aq_rows,status,error
 2026-11-14T10:34+00:00,2270,14920,864,success,
 2026-11-14T18:11+00:00,2270,13466,864,success,
 2026-11-14T22:30+00:00,3019,14094,864,success,
+2026-11-15T06:42+00:00,1904,0,0,failed at wind: RuntimeError,request failed after 3 attempts: URLError
