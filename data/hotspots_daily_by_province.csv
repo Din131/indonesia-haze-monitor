@@ -1261,14 +1261,19 @@ date_wib,province,hotspots,high_confidence
 2026-11-27,Sulawesi Utara,8,0
 2026-11-27,Sumatera Selatan,17,0
 2026-11-28,Banten,1,0
+2026-11-28,Gorontalo,2,1
 2026-11-28,Jambi,1,0
 2026-11-28,Jawa Timur,7,0
 2026-11-28,Kalimantan Selatan,20,0
 2026-11-28,Kalimantan Tengah,4,0
 2026-11-28,Kalimantan Timur,25,0
-2026-11-28,Luar Indonesia,18,0
-2026-11-28,Maluku Utara,9,0
-2026-11-28,Sulawesi Selatan,1,0
-2026-11-28,Sulawesi Tengah,1,0
-2026-11-28,Sulawesi Tenggara,2,0
-2026-11-28,Sulawesi Utara,2,0
+2026-11-28,Luar Indonesia,363,8
+2026-11-28,Maluku,32,0
+2026-11-28,Maluku Utara,25,0
+2026-11-28,Nusa Tenggara Timur,3,0
+2026-11-28,Papua,890,25
+2026-11-28,Papua Barat,2,0
+2026-11-28,Sulawesi Selatan,6,0
+2026-11-28,Sulawesi Tengah,10,0
+2026-11-28,Sulawesi Tenggara,49,5
+2026-11-28,Sulawesi Utara,3,0
